@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "784859592636",
+    "project_id": "emaus-db",
+    "storage_bucket": "emaus-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784859592636:android:4ce64cca6171d3094b1db9",
+        "android_client_info": {
+          "package_name": "com.example.emmausapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784859592636-c2568k61bpp1capjdqu7tp7tmc5mbg7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8BN1lUqtxJiGgkI4AFXouIJcj1cA2Jgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784859592636-c2568k61bpp1capjdqu7tp7tmc5mbg7l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
