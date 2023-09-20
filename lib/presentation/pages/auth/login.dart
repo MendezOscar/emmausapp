@@ -49,8 +49,7 @@ class Login extends StatelessWidget {
                       textStyle: const TextStyle(fontSize: 16),
                       backgroundColor: const Color.fromARGB(255, 40, 119, 46)),
                   onPressed: () async {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const Home()));
+                    _signInWithEmailAndPassword(context);
                   },
                   child: const Text('Iniciar sesión'),
                 ),
@@ -88,5 +87,26 @@ class Login extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _signInWithEmailAndPassword(context) async {
+    try {
+      var user = (await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: "",
+        password: "",
+      ))
+          .user;
+
+      if (user != null) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const Home()));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
   }
 }
