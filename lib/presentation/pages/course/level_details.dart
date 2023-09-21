@@ -72,7 +72,7 @@ class LevelDetails extends StatelessWidget {
                                       return CourseDescription(
                                         title: dataCourse['course'],
                                         description: dataCourse['description'],
-                                        imagenPath: "curso1.png",
+                                        imagenPath: dataCourse['imagePath'],
                                         courseId: dataCourse['id'],
                                       );
                                     } else {

@@ -33,26 +33,10 @@ class Profile extends StatelessWidget {
                         color: Colors.white,
                       )),
                   const ProfileInfoDetails(
-                      title: "ID",
-                      description: "0505-1195-00061",
-                      icon: Icon(
-                        Icons.key,
-                        size: 30,
-                        color: Colors.white,
-                      )),
-                  const ProfileInfoDetails(
                       title: "Iglesia local",
                       description: "Aldea El Batey",
                       icon: Icon(
                         Icons.church,
-                        size: 30,
-                        color: Colors.white,
-                      )),
-                  const ProfileInfoDetails(
-                      title: "Ministerios",
-                      description: "Evangelio",
-                      icon: Icon(
-                        Icons.task,
                         size: 30,
                         color: Colors.white,
                       )),

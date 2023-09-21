@@ -2,8 +2,23 @@ import 'package:emmausapp/presentation/pages/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
+
+  @override
+  State<Login> createState() => _MyLoginState();
+}
+
+class _MyLoginState extends State<Login> {
+  final myEmailControler = TextEditingController();
+  final myPasswordControler = TextEditingController();
+
+  @override
+  void dispose() {
+    myEmailControler.dispose();
+    myPasswordControler.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +32,10 @@ class Login extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          const TextField(
-            style: TextStyle(color: Colors.grey),
-            decoration: InputDecoration(
+          TextField(
+            controller: myEmailControler,
+            style: const TextStyle(color: Colors.grey),
+            decoration: const InputDecoration(
                 filled: true,
                 fillColor: Color.fromARGB(255, 11, 44, 71),
                 border: OutlineInputBorder(),
@@ -29,9 +45,11 @@ class Login extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          const TextField(
-            style: TextStyle(color: Colors.grey),
-            decoration: InputDecoration(
+          TextField(
+            controller: myPasswordControler,
+            obscureText: true,
+            style: const TextStyle(color: Colors.grey),
+            decoration: const InputDecoration(
                 filled: true,
                 fillColor: Color.fromARGB(255, 11, 44, 71),
                 border: OutlineInputBorder(),
@@ -49,7 +67,8 @@ class Login extends StatelessWidget {
                       textStyle: const TextStyle(fontSize: 16),
                       backgroundColor: const Color.fromARGB(255, 40, 119, 46)),
                   onPressed: () async {
-                    _signInWithEmailAndPassword(context);
+                    _signInWithEmailAndPassword(context, myEmailControler.text,
+                        myPasswordControler.text);
                   },
                   child: const Text('Iniciar sesión'),
                 ),
@@ -88,23 +107,25 @@ class Login extends StatelessWidget {
       ),
     );
   }
+}
 
-  void _signInWithEmailAndPassword(context) async {
-    try {
-      var user = (await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: "",
-        password: "",
-      ))
-          .user;
-
-      if (user != null) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const Home()));
-      }
-    } catch (e) {
+void _signInWithEmailAndPassword(context, email, password) async {
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const Home()));
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
+        const SnackBar(
+          content: Center(child: Text("No se encontro este usuario")),
+        ),
+      );
+    } else if (e.code == 'wrong-password') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Center(child: Text("Contrasena incorrecta")),
         ),
       );
     }

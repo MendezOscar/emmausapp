@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class CourseDescription extends StatelessWidget {
   final String title;
   final String description;
-  final String imagenPath;
+  final int imagenPath;
   final String courseId;
 
   const CourseDescription({
@@ -25,7 +25,7 @@ class CourseDescription extends StatelessWidget {
           Column(
             children: [
               Image.asset(
-                'assets/images/$imagenPath',
+                'assets/images/$imagenPath.png',
                 width: 150,
                 height: 150,
               )
@@ -59,10 +59,10 @@ class CourseDescription extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CourseDetails(
-                              title: title,
-                              description: description,
-                              courseId: courseId,
-                            )));
+                            title: title,
+                            description: description,
+                            courseId: courseId,
+                            imagenPath: imagenPath)));
                   },
                   child: const Text('Ver mayor informacion'),
                 )

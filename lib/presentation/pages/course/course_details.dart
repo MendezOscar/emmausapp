@@ -5,11 +5,13 @@ class CourseDetails extends StatelessWidget {
   final String title;
   final String description;
   final String courseId;
+  final int imagenPath;
 
   const CourseDetails(
       {required this.title,
       required this.description,
       required this.courseId,
+      required this.imagenPath,
       super.key});
 
   @override
@@ -31,7 +33,7 @@ class CourseDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/images/curso1.png',
+                      'assets/images/$imagenPath.png',
                       width: 200,
                       height: 300,
                     )
