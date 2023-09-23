@@ -4,14 +4,15 @@ import 'package:emmausapp/presentation/widgets/incourse_card_details.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class InCourse extends StatelessWidget {
-  const InCourse({super.key});
+class ApproveCourse extends StatelessWidget {
+  const ApproveCourse({super.key});
 
   @override
   Widget build(BuildContext context) {
     final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
     late Future<String> userEmail;
     late String courseName = "";
+
     late Map<String, dynamic> student = {
       "phone": "",
       "currentCourse": "",
@@ -28,12 +29,14 @@ class InCourse extends StatelessWidget {
       "imagePath": "",
     };
 
-    late Map<String, dynamic> sectionStudent = {
-      "calification": "",
-      "courseId": "",
-      "revisorName": "",
-      "status": "",
-    };
+    late List<Map<String, dynamic>> sectionStudent = [
+      {
+        "calification": "",
+        "courseId": "",
+        "revisorName": "",
+        "status": "",
+      }
+    ];
     final db = FirebaseFirestore.instance;
 
     getCourseName(id) {
@@ -53,12 +56,12 @@ class InCourse extends StatelessWidget {
       db
           .collection("section-student")
           .where("idStudent", isEqualTo: id)
-          .where("status", isEqualTo: "EN CURSO")
+          .where("status", isEqualTo: "APROBADA")
           .snapshots()
           .listen((event) {
         for (var doc in event.docs) {
-          sectionStudent = doc.data();
-          getCourseName(sectionStudent["courseId"]);
+          sectionStudent.add(doc.data());
+          getCourseName(sectionStudent[1]["courseId"]);
         }
       });
     }
@@ -85,29 +88,42 @@ class InCourse extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.only(top: 16, right: 0, left: 0, bottom: 5),
+      padding: const EdgeInsets.only(top: 0, right: 0, left: 0, bottom: 5),
       child: Column(children: [
         FutureBuilder(
             future: getUserEmail,
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               if (snapshot.hasData) {
-                if (sectionStudent["status"] != "") {
-                  return InCourseCardDetails(
-                    course: courseName,
-                    revisor: sectionStudent["revisorName"],
-                    status: sectionStudent["status"],
-                    note: sectionStudent["calification"].toString(),
-                    module: course["moduleName"],
-                    level: course["levelName"],
-                    imagenPath: course["imagePath"].toString(),
-                  );
+                if (sectionStudent.first["status"] == "") {
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: sectionStudent.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (sectionStudent[index]["status"] != "") {
+                          return InCourseCardDetails(
+                            course: courseName,
+                            revisor: sectionStudent[index]["revisorName"],
+                            status: sectionStudent[index]["status"],
+                            note: sectionStudent[index]["calification"]
+                                .toString(),
+                            module: course["moduleName"],
+                            level: course["levelName"],
+                            imagenPath: course["imagePath"].toString(),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      });
                 } else {
                   return const EmptyState(
                       imgPath: 'assets/images/empty.svg',
-                      message: 'No estas cursando ahora');
+                      message: 'No tienes cursos aprobados aun');
                 }
               } else if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return const Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: Center(child: CircularProgressIndicator()),
+                );
               } else {
                 return const EmptyState(
                     imgPath: 'assets/images/wifi_signal.svg',

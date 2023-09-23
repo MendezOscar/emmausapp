@@ -99,7 +99,9 @@ class Profile extends StatelessWidget {
                             const SizedBox(height: 10),
                             ProfileInfoDetails(
                                 title: "Curso",
-                                description: courseName,
+                                description: courseName == ""
+                                    ? "No estas cursando ahora"
+                                    : courseName,
                                 icon: const Icon(
                                   Icons.book,
                                   size: 30,
@@ -161,6 +163,9 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         );
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
                       } else {
                         return Container();
                       }

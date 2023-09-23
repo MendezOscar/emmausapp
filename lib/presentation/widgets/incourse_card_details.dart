@@ -7,6 +7,7 @@ class InCourseCardDetails extends StatelessWidget {
   final String note;
   final String module;
   final String level;
+  final String imagenPath;
 
   const InCourseCardDetails({
     required this.course,
@@ -15,6 +16,7 @@ class InCourseCardDetails extends StatelessWidget {
     required this.note,
     required this.module,
     required this.level,
+    required this.imagenPath,
     super.key,
   });
 
@@ -30,7 +32,7 @@ class InCourseCardDetails extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset(
-                  'assets/images/1.png',
+                  'assets/images/$imagenPath.png',
                   width: 120,
                   height: 120,
                 ),

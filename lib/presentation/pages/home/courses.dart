@@ -1,4 +1,5 @@
 import 'package:emmausapp/presentation/pages/course/all.dart';
+import 'package:emmausapp/presentation/pages/course/approve_course.dart';
 import 'package:emmausapp/presentation/pages/course/in_course.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +45,7 @@ class Courses extends StatelessWidget {
                 child: TabBarView(children: [
                   AllCourses(),
                   InCourse(),
-                  MyTabOne(),
+                  ApproveCourse(),
                 ]),
               )
             ],
@@ -52,18 +53,5 @@ class Courses extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class MyTabOne extends StatelessWidget {
-  const MyTabOne({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: Text(
-      "This is Tab One",
-      style: TextStyle(fontSize: 20),
-    ));
   }
 }

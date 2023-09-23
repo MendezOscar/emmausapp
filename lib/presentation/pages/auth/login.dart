@@ -116,6 +116,7 @@ void _signInWithEmailAndPassword(context, email, password) async {
     UserCredential userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
     await prefs.setString('emailUser', email);
+
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const Home()));
   } on FirebaseAuthException catch (e) {
