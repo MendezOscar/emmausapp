@@ -1,4 +1,5 @@
 import 'package:emmausapp/presentation/pages/course/all.dart';
+import 'package:emmausapp/presentation/pages/course/in_course.dart';
 import 'package:flutter/material.dart';
 
 class Courses extends StatelessWidget {
@@ -7,6 +8,7 @@ class Courses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: 1,
       length: 3,
       child: Scaffold(
         body: Padding(
@@ -41,7 +43,7 @@ class Courses extends StatelessWidget {
               const Expanded(
                 child: TabBarView(children: [
                   AllCourses(),
-                  MyTabOne(),
+                  InCourse(),
                   MyTabOne(),
                 ]),
               )

@@ -35,7 +35,7 @@ class LevelDetails extends StatelessWidget {
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text("Loading");
+                return const Center(child: CircularProgressIndicator());
               }
               return ListView(
                 shrinkWrap: true,
@@ -58,7 +58,8 @@ class LevelDetails extends StatelessWidget {
 
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return const Text("Loading");
+                                return const Center(
+                                    child: CircularProgressIndicator());
                               }
 
                               return ListView(

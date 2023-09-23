@@ -1,6 +1,7 @@
 import 'package:emmausapp/presentation/pages/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -111,8 +112,10 @@ class _MyLoginState extends State<Login> {
 
 void _signInWithEmailAndPassword(context, email, password) async {
   try {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     UserCredential userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
+    await prefs.setString('emailUser', email);
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const Home()));
   } on FirebaseAuthException catch (e) {
